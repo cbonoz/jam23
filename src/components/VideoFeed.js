@@ -74,48 +74,38 @@ export default function VideoFeed() {
 
   const { peers } = usePeers();
 
+  const hasRoom = !!roomId;
+
   return (
     <div className="grid grid-cols-2">
       <div>
-        <h2 className="text-2xl">Room State</h2>
-        <h3>{JSON.stringify(state.value)}</h3>
-        {/* 
-        <h2 className="text-2xl">Me Id</h2>
-        <div className="break-words">
-          {JSON.stringify(state.context.peerId)}
-        </div>
-        <h2 className="text-2xl">Consumers</h2>
-        <div className="break-words">
-          {JSON.stringify(state.context.consumers)}
-        </div>
-
-        <h2 className="text-2xl">Error</h2>
-        <div className="break-words text-red-500">
-          {JSON.stringify(state.context.error)}
-        </div>
-        <h2 className="text-2xl">Peers</h2>
-        <div className="break-words">{JSON.stringify(peers)}</div>
-        <h2 className="text-2xl">Consumers</h2>
-        <div className="break-words">
-          {JSON.stringify(state.context.consumers)}
-        </div> */}
-
+        <h2 className="text-2xl">LiveStream</h2>
+        <p>{JSON.stringify(state.value)}</p>
+        {!hasRoom && <div>
         <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder='Enter existing room ID'  />
+        <br/>
+        <br/>
         <Button
+        className='standard-button'
+        type='primary'
           disabled={!value}
           onClick={() => {
             setRoomId(value)
           }}
-        >Save</Button>
-         or 
+        >Save</Button>&nbsp;
+        or &nbsp;
         <Button
+        className='standard-button'
+        type='secondary'
           disabled={roomId}
           onClick={getRoomId}
         >
           Create new room id
         </Button>
 
-        {roomId && <div>
+        </div>}
+
+        {hasRoom && <div>
           <h3>Room ID: {roomId}</h3>
 
           <Button
@@ -199,7 +189,10 @@ export default function VideoFeed() {
               STOP_PRODUCING_CAM
             </Button>
 
-            <Button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+            <Button disabled={!leaveRoom.isCallable} onClick={() => {
+              setRoomId(null)
+              leaveRoom()
+            }}>
               LEAVE_ROOM
             </Button>
           </div>
@@ -214,6 +207,7 @@ export default function VideoFeed() {
                 .filter(peer => peer.cam)
                 .map(peer => (
                   <Video
+                  className='w-full h-full video-stream'
                     key={peer.peerId}
                     peerId={peer.peerId}
                     track={peer.cam}

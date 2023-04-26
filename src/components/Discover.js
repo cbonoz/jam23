@@ -111,7 +111,7 @@ function Discover(props) {
           </p>
           <p>
             <a href={result.bundleUrl} target="_blank">
-              View Hyperspace Bundle
+              View HuddleCast bundle
             </a>
           </p>
           <p>Payable address: {result.payableAddress}</p>

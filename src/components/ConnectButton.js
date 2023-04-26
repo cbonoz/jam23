@@ -21,7 +21,7 @@ export default function ConnectButton() {
     );
   }
   return (
-    <span className="right">
+    <span className="right connect-button">
       <Button type="primary" onClick={handleConnectWallet}>
         Connect to a wallet
       </Button>

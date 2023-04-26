@@ -5,7 +5,7 @@ import { Input, Button, Steps, Layout } from "antd";
 import { storeFiles } from "../util/stor";
 import { CONNECT_TEXT, UPLOAD_INFO } from "../util/constants";
 import { deployContract } from "../contract/huddleContract";
-import { getListingUrl, ipfsUrl, transactionUrl } from "../util";
+import { getListingUrl, ipfsUrl, isEmpty, transactionUrl } from "../util";
 import {ethers} from 'ethers'
 import { useEthers } from "@usedapp/core";
 
@@ -16,9 +16,11 @@ const { Step } = Steps;
 const LAST_STEP = 3;
 
 
-function SellStream({ isLoggedIn, signer, provider, blockExplorer }) {
+function SellStream({}) {
   const { activateBrowserWallet, account } = useEthers();
   const [currentStep, setCurrentStep] = useState(0);
+
+  const isLoggedIn = !!account;
 
   useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
@@ -166,6 +168,9 @@ function SellStream({ isLoggedIn, signer, provider, blockExplorer }) {
         return (
           <div>
             <StreamDropzone files={files} setFiles={setFiles} />
+            {isEmpty(files) && <p>
+              Upload at least one file to continue.
+              </p>}
           </div>
         );
       case 3: // done
@@ -204,9 +209,11 @@ function SellStream({ isLoggedIn, signer, provider, blockExplorer }) {
     }
   };
 
+  const onLastStep = currentStep === LAST_STEP - 1
+
   return (
     <div className="content">
-      <h1 className="sell-heading">Publish a new Hyperspace bundle contract</h1>
+      <h1 className="sell-heading">Publish a new {currentStep} HuddleCast stream bundle</h1>
       <Header>
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />
@@ -219,7 +226,7 @@ function SellStream({ isLoggedIn, signer, provider, blockExplorer }) {
         <div className="sell-area">{getBody()}</div>
       </Content>
       <Footer>
-        {(currentStep !== 0 || (currentStep !== 1 && !isLoggedIn)) && (
+        {currentStep === 0 || (currentStep !== 1 && !isLoggedIn) && (
           <Button
             disabled={loading}
             type="primary"
@@ -231,12 +238,12 @@ function SellStream({ isLoggedIn, signer, provider, blockExplorer }) {
         &nbsp;
         {currentStep < LAST_STEP && (
           <Button
-            disabled={loading || !account}
+            disabled={loading || !isLoggedIn || (onLastStep && isEmpty(files))}
             loading={loading}
             type="primary"
             onClick={() => updateStep(1)}
           >
-            {currentStep === LAST_STEP - 1 ? "Done" : "Next"}
+            {onLastStep ? "Create Contract" : "Next"}
           </Button>
         )}
       </Footer>

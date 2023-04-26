@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 contract BundleContract {
     // A BundleContract represents digital ownership over bundle files produced by a HyperspaceTV creator.
     
-    string private name; // Name of the hyperspace bundle contract / item.
+    string private name; // Name of the HuddleCast stream bundle / item.
     string private bundleUrl; // Link to the video assets on IFPS.
     string private creatorName; // Hyperspace creator of the bundle.
     address private payableAddress; // Address to credit on purchase.

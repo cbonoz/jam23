@@ -12,6 +12,14 @@ export const formatMoney = (m) => {
   return formatter.format(m);
 };
 
+export const isEmpty = (obj) => {
+  return !obj || obj.length === 0;
+}
+
+export function getExtensionFromFileName(fileName) {
+  return fileName.split('.').pop();
+}
+
 export function getAverage(array) {
   return array.reduce((a, b) => a + b) / array.length;
 }
@@ -37,4 +45,3 @@ export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}`;
 export const accountUrl = (account) =>
   `${ACTIVE_NETWORK.url}/account/${account}`;
 
-  

@@ -9,9 +9,21 @@
   cursor: pointer;
 }
 
+.conntent-button {
+  display: block;
+}
+
 .ant-layout-header {
   background-color: white;
   background: white;
+}
+
+.standard-btn {
+  margin: 20px;
+}
+
+.video-stream {
+  max-width: 300px;;
 }
 
 .container {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { bytesToSize } from "../util";
+import { bytesToSize, getExtensionFromFileName } from "../util";
 
 const thumbsContainer = {
   display: "flex",
@@ -52,6 +52,7 @@ export function StreamDropzone({ files, setFiles }) {
   const thumbs = files.map((file) => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
+        <img src={file.preview}/>&nbsp;&nbsp;
         <p>
           <b>{file.name}</b>
           <br />
@@ -61,7 +62,7 @@ export function StreamDropzone({ files, setFiles }) {
               <br />
             </span>
           )}
-          {file.type && <span>Type: {file.type}</span>}
+          <span>Type: {getExtensionFromFileName(file.name)}</span>
         </p>
       </div>
     </div>
