@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useEventListener, useHuddle01 } from '@huddle01/react';
 import { Audio, Video } from '@huddle01/react/components';
@@ -16,12 +16,20 @@ import {
 import { Button, Input } from 'antd';
 import { HUDDLE_API_KEY } from '../util/constants';
 import axios from 'axios';
+import RecordingControl from './RecordingControl';
 
-export default function VideoFeed() {
+export default function VideoFeed({pathRoomId}) {
   const videoRef = useRef(null);
   const [roomId, setRoomId] = React.useState();
   const [ready, setReady] = React.useState(false);
   const [value, setValue] = React.useState();
+
+  useEffect(() => {
+    if (pathRoomId) {
+      setRoomId(pathRoomId)
+    }
+  }, [pathRoomId])
+
 
   async function getRoomId() {
     // https://www.huddle01.com/docs/apis/create-room
@@ -114,51 +122,79 @@ export default function VideoFeed() {
               joinLobby(roomId);
             }}
           >
-            JOIN_LOBBY
+            Join lobby
           </Button>
           <br />
+          <div>
+            <h2>Stream:</h2>
+            <video ref={videoRef} 
+            className='video-stream'
+            autoPlay 
+            />
+            <div className="grid grid-cols-4">
+              {Object.values(peers)
+                .filter(peer => peer.cam)
+                .map(peer => (
+                  <Video
+                  className='video-stream'
+                    key={peer.peerId}
+                    peerId={peer.peerId}
+                    track={peer.cam}
+                    debug
+                  />
+                ))}
+              {Object.values(peers)
+                .filter(peer => peer.mic)
+                .map(peer => (
+                  <Audio key={peer.peerId} peerId={peer.peerId} track={peer.mic} />
+                ))}
+            </div>
+          <RecordingControl/>
+          </div>
+
           <br />
-          <h2 className="text-3xl text-yellow-500 font-extrabold">Lobby</h2>
+          <h2 className="text-3xl text-yellow-500 font-extrabold">Main Controls</h2>
           <div className="flex gap-4 flex-wrap">
             <Button
               disabled={!fetchVideoStream.isCallable}
               onClick={fetchVideoStream}
             >
-              FETCH_VIDEO_STREAM
+              Enable Video
             </Button>
 
             <Button
               disabled={!fetchAudioStream.isCallable}
               onClick={fetchAudioStream}
             >
-              FETCH_AUDIO_STREAM
+              Enable Audio
             </Button>
 
             <Button disabled={!joinRoom.isCallable} onClick={joinRoom}>
-              JOIN_ROOM
+              Join Room
             </Button>
 
             <Button
               disabled={!state.matches('Initialized.JoinedLobby')}
               onClick={() => send('LEAVE_LOBBY')}
             >
-              LEAVE_LOBBY
+              Leave lobby
             </Button>
 
             <Button
               disabled={!stopVideoStream.isCallable}
               onClick={stopVideoStream}
             >
-              STOP_VIDEO_STREAM
+              Stop streaming
             </Button>
             <Button
               disabled={!stopAudioStream.isCallable}
               onClick={stopAudioStream}
             >
-              STOP_AUDIO_STREAM
+              Pause audio
             </Button>
           </div>
           <br />
+          {false && <div>
           <h2 className="text-3xl text-green-600 font-extrabold">Room</h2>
           <div className="flex gap-4 flex-wrap">
             <Button
@@ -196,31 +232,11 @@ export default function VideoFeed() {
               LEAVE_ROOM
             </Button>
           </div>
+            </div>}
 
           {/* Uncomment to see the Xstate Inspector */}
           {/* <Inspect /> */}
-          <div>
-            Me Video:
-            <video ref={videoRef} autoPlay muted></video>
-            <div className="grid grid-cols-4">
-              {Object.values(peers)
-                .filter(peer => peer.cam)
-                .map(peer => (
-                  <Video
-                  className='w-full h-full video-stream'
-                    key={peer.peerId}
-                    peerId={peer.peerId}
-                    track={peer.cam}
-                    debug
-                  />
-                ))}
-              {Object.values(peers)
-                .filter(peer => peer.mic)
-                .map(peer => (
-                  <Audio key={peer.peerId} peerId={peer.peerId} track={peer.mic} />
-                ))}
-            </div>
-          </div>
+        
         </div>}
       </div>
     </div>

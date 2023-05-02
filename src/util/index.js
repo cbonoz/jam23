@@ -1,4 +1,4 @@
-import { ACTIVE_NETWORK } from "./constants";
+import { ACTIVE_NETWORK, IPFS_BASE_URL } from "./constants";
 
 export const formatMoney = (m) => {
   var formatter = new Intl.NumberFormat("en-US", {
@@ -39,7 +39,14 @@ export function bytesToSize(bytes) {
   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-export const ipfsUrl = (cid) => `https://ipfs.io/ipfs/${cid}`;
+export const ipfsUrl = (cid, fileName) => {
+  // let url = `https://ipfs.io/ipfs/${cid}`;
+  let url = `${IPFS_BASE_URL}/${cid}`;
+  if (fileName) {
+    return `${url}/${fileName}`;
+  }
+  return url;
+};
 
 export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}`;
 export const accountUrl = (account) =>

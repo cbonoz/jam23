@@ -38,9 +38,9 @@ function App() {
               Sell Content
             </Menu.Item>
 
-            <Menu.Item key="/about" onClick={() => navigate('/about')}>
+            {/* <Menu.Item key="/about" onClick={() => navigate('/about')}>
               About
-            </Menu.Item>
+            </Menu.Item> */}
             <ConnectButton />
           </Menu>
         </Header>
@@ -49,6 +49,8 @@ function App() {
             <Routes>
               <Route exact path="/" element={<About />} />
               <Route exact path="/stream" element={<LiveStream />} />
+              {/* Stream with room id in path */}
+              <Route exact path="/stream/:roomId" element={<LiveStream />} />
               <Route exact path="/sell" element={<SellStream />} />
               <Route exact path="/about" element={<About />} />
               <Route path="/:address" element={<Discover />} />

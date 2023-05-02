@@ -18,12 +18,14 @@
   background: white;
 }
 
+
 .standard-btn {
   margin: 20px;
 }
 
 .video-stream {
-  max-width: 300px;;
+  width: 400px;
+  max-width: 400x;
 }
 
 .container {

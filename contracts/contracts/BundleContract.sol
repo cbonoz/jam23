@@ -14,6 +14,8 @@ contract BundleContract {
     uint private price;
     address owner;
 
+    event BundlePurchased(address buyer, uint price);
+
     constructor(string memory _name, string memory _bundleUrl, string memory _creatorName, address _payableAddress, uint _price) {
         
         console.log("Deploying a BundleContract with name:", _name);
@@ -31,6 +33,8 @@ contract BundleContract {
         // Set ownership of contract.
         payable(payableAddress).transfer(msg.value);
         owner = msg.sender;
+
+        emit BundlePurchased(msg.sender, msg.value);
     }
 
      function getOwner() public view returns (address) {

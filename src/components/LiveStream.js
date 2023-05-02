@@ -5,12 +5,17 @@ import { useHuddle01 } from '@huddle01/react';
 import { useRecording } from '@huddle01/react/hooks';
 import Video from './VideoFeed';
 import VideoFeed from './VideoFeed';
+import { useParams } from 'react-router-dom';
 
 
 // import { useLivestream } from '@huddle01/react/hooks';
 
 const LiveStream = () => {
     const { initialize, isInitialized } = useHuddle01();
+    // Take room id from path
+    const params = useParams()
+    const roomId = params.roomId
+
  
     useEffect(() => {
       // its preferable to use env vars to store projectId
@@ -28,7 +33,7 @@ const LiveStream = () => {
   
     return (
       <div>
-        <VideoFeed/>
+        <VideoFeed pathRoomId={roomId}/>
       </div>
     )}
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { APP_DESC, APP_NAME } from "../util/constants";
+import { ABOUT_INFO, APP_DESC, APP_NAME } from "../util/constants";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { Button, Steps } from "antd";
@@ -11,6 +11,7 @@ function About(props) {
       <img src={logo} className="about-image" />
       <h3>{APP_DESC}</h3>
       <br/>
+
       <Steps
         direction="horizontal"
         current={0}
