@@ -25,7 +25,7 @@ export function getAverage(array) {
 }
 
 export const getListingUrl = (address) => {
-  return `${window.location.origin}/${address}`
+  return `${window.location.origin}/purchase/${address}`
 }
 
 export const capitalize = (s) => {
@@ -48,7 +48,7 @@ export const ipfsUrl = (cid, fileName) => {
   return url;
 };
 
-export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}`;
+export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}?network=hyperspacenet`;
 export const accountUrl = (account) =>
   `${ACTIVE_NETWORK.url}/account/${account}`;
 

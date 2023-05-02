@@ -21,7 +21,7 @@ function About(props) {
         ]}
       />
 
-      <Button type="primary" size="large" onClick={() => navigate('/sell')}>Start selling</Button>
+      <Button type="primary" size="large" onClick={() => navigate('/stream')}>Start streaming</Button>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { useHuddle01 } from "@huddle01/react";
 import "antd/dist/antd.min.css";
 import "./App.css";
 import { useNavigate } from "react-router-dom";
+import PurchaseStream from "./components/PurchaseStream";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -22,6 +23,8 @@ function App() {
   const pathname = window.location.pathname;
   console.log("pathname", pathname);
 
+  const isPurchaseUrl = pathname.startsWith("/purchase");
+
   return (
     <div className="App">
       <Layout>
@@ -30,6 +33,7 @@ function App() {
             <Menu.Item key="/" onClick={() => navigate('')}>
               <img src={logo} className="header-image" />
             </Menu.Item>
+            {!isPurchaseUrl && (<>
             <Menu.Item key="/stream" onClick={() => navigate('/stream')}>
               Start Streaming
             </Menu.Item>
@@ -37,7 +41,7 @@ function App() {
 
               Sell Content
             </Menu.Item>
-
+</>)}
             {/* <Menu.Item key="/about" onClick={() => navigate('/about')}>
               About
             </Menu.Item> */}
@@ -54,6 +58,9 @@ function App() {
               <Route exact path="/sell" element={<SellStream />} />
               <Route exact path="/about" element={<About />} />
               <Route path="/:address" element={<Discover />} />
+
+              {/* Purchase stream */}
+              <Route path="/purchase/:contractAddress" element={<PurchaseStream />} />
             </Routes>
           </div>
         </Content>

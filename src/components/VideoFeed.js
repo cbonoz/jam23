@@ -43,6 +43,7 @@ export default function VideoFeed({pathRoomId}) {
         },
         {
           headers: {
+            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
             'x-api-key': HUDDLE_API_KEY
           },
@@ -62,7 +63,6 @@ export default function VideoFeed({pathRoomId}) {
       videoRef.current.srcObject = state.context.camStream;
   });
 
-  const { initialize, isInitialized } = useHuddle01();
   const { joinLobby } = useLobby();
   const {
     fetchAudioStream,
@@ -127,7 +127,8 @@ export default function VideoFeed({pathRoomId}) {
           <br />
           <div>
             <h2>Stream:</h2>
-            <video ref={videoRef} 
+            <video 
+            ref={videoRef} 
             className='video-stream'
             autoPlay 
             />

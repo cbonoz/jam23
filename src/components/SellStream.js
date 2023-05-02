@@ -181,7 +181,9 @@ function SellStream({}) {
               View transaction<br/>
               <a target="_blank" href={transactionUrl(result.transactionHash)}>{result.transactionHash}</a></p>}
 
-              <p>Share the contract purchase address below!</p>
+              <p>Share the contract purchase address below!<br/>
+              <a target="_blank" href={getListingUrl(result.contract)}>here</a>
+</p>
             {Object.keys(result).map((k) => {
               return (
                 <li>
@@ -213,7 +215,7 @@ function SellStream({}) {
 
   return (
     <div className="content">
-      <h1 className="sell-heading">Publish a new {currentStep} HuddleCast stream bundle</h1>
+      <h1 className="sell-heading">Publish a new HuddleCast stream bundle</h1>
       <Header>
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />

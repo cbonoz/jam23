@@ -42,7 +42,7 @@ export function StreamDropzone({ files, setFiles }) {
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
+            preview: file.name.indexOf('mp' !== -1) ? 'https://www.freeiconspng.com/thumbs/document-icon/document-note-paper-text-icon-13.jpg' : URL.createObjectURL(file),
           })
         )
       );
