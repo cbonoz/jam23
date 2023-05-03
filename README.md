@@ -16,7 +16,7 @@ Built for the Videojam 2023 hackathon.
 
 Existing streamers often have large followings and post their content to youtube or other sites after streaming on live networks like Twitch - but that could be the end of it. Given these followings, we want to provide an opportunity to further connect with fans by providing memorabilia, and providing an additional revenue opportunity for the content creator. HuddleCast allows any streamer to turn collections of their streamed content into a purchase-able contract and IPFS video group.
 
-These collections can also be later resold and traded by new owners.
+These collections could potentially be resold and traded by new owners later.
 
 Many video marketplace platforms exist, but:
 
