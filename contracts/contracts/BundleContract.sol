@@ -4,7 +4,7 @@ pragma solidity ^0.8.18;
 import "hardhat/console.sol";
 
 contract BundleContract {
-    // A BundleContract represents digital ownership over bundle files produced by a HyperspaceTV creator.
+    // A BundleContract represents digital ownership over bundle files produced by a content creator.
     
     string private name; // Name of the HuddleCast stream bundle / item.
     string private bundleUrl; // Link to the video assets on IFPS.

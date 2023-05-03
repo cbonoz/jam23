@@ -77,17 +77,17 @@ Update `ACTIVE_NETWORK` in `constants.js` to reflect the target network for the 
 - Production deployment.
 
 ### Screenshots
-<h3>Search/Home</h3>
-<img src="./img/search.png" width=800>
+<h3>Home</h3>
+<img src="./img/about.png" width=800>
 
 <h3>Specify terms of HuddleCast contract</h3>
-<img src="./img/upload1.png" width=800>
+<img src="./img/buy.png" width=800>
 
 <h3>Adding video files</h3>
-<img src="./img/upload2.png" width=800>
+<img src="./img/upload.png" width=800>
 
 <h3>Deploying contract on Hyperspace testnet</h3>
-<img src="./img/confirm.png" width=800>
+<img src="./img/created.png" width=800>
 
 <h3>Breakpoint at contract creation</h3>
 <img src="./img/deploy.png" width=800>

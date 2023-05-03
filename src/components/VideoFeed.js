@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useEventListener, useHuddle01 } from '@huddle01/react';
 import { Audio, Video } from '@huddle01/react/components';
+import { MD5 } from 'crypto-js';
 /* Uncomment to see the Xstate Inspector */
 // import { Inspect } from '@huddle01/react/components';
 
@@ -17,6 +18,7 @@ import { Button, Input } from 'antd';
 import { HUDDLE_API_KEY } from '../util/constants';
 import axios from 'axios';
 import RecordingControl from './RecordingControl';
+import { PROXY_URL } from '../util';
 
 export default function VideoFeed({pathRoomId}) {
   const videoRef = useRef(null);
@@ -35,15 +37,20 @@ export default function VideoFeed({pathRoomId}) {
     // https://www.huddle01.com/docs/apis/create-room
     console.log('get room')
     try {
-      const { data } = await axios.post(
-        'https://iriko.testing.huddle01.com/api/v1/create-room',
-        {
+      const payload = {
+        body: {
           title: 'Stream ' + Date.now(),
           hostWallets: ['0x29f54719E88332e70550cf8737293436E9d7b10b'],
         },
+        hash: MD5(window.location.origin).toString(),
+        url: 'https://iriko.testing.huddle01.com/api/v1/create-room',
+        type: 'POST',
+      }
+      const { data } = await axios.post(
+        PROXY_URL,
+        payload,
         {
           headers: {
-            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
             'x-api-key': HUDDLE_API_KEY
           },

@@ -33,6 +33,8 @@ export const capitalize = (s) => {
   return (s.charAt(0).toUpperCase() + s.slice(1)).replace("-", " ");
 };
 
+export const PROXY_URL = 'https://http-proxy.fly.dev/proxy'
+
 
 export const convertCamelToCapitalSpaces = (s) => {
   if (typeof s !== "string") return "";
