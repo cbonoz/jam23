@@ -70,7 +70,7 @@ export default function VideoFeed({pathRoomId}) {
       videoRef.current.srcObject = state.context.camStream;
   });
 
-  const { joinLobby } = useLobby();
+  const { joinLobby, error } = useLobby();
   const {
     fetchAudioStream,
     produceAudio,
@@ -120,6 +120,8 @@ export default function VideoFeed({pathRoomId}) {
         </Button>
 
         </div>}
+
+        {error && <p className='error-text'>{error}</p>}
 
         {hasRoom && <div>
           <h3>Room ID: {roomId}</h3>

@@ -99,7 +99,13 @@ Update `ACTIVE_NETWORK` in `constants.js` to reflect the target network for the 
 <img src="./img/contract.png" width=800>
 
 <h3>Completing purchase via shareable payment url</h3>
-<img src="./img/pay.png" width=800>
+<img src="./img/checkout.png" width=800>
+
+<h3>Creating a stream on the HuddleCast app</h3>
+<img src="./img/video.png" width=800>
+
+<h3>FEVM contract code snippet</h3>
+<img src="./img/contract.png" width=800>
 
 <h3>About page</h3>
 <img src="./img/about.png" width=800>
