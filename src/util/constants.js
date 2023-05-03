@@ -19,7 +19,7 @@ Many video marketplace platforms exist, but:
 
 - There's not a dominant one that appeals to the streaming (gaming and non-gaming) streaming market.
 - May not integrate with existing streaming networks. HuddleCast doesn't care how you broadcast, only that the uploaded listings have a particular format and content.
-- Have higher overhead - contentstream backed by Filecoin and allows you to re-use existing assets and content if you wish.
+- Have higher overhead - HuddleCast assets are backed by Filecoin and allows you to re-use existing assets and content if you wish.
 - Many streamers are already into technology and can port their existing streams onto the platform, or use the natively integrated Huddle01 experience to create a group livestream and sell the video bundle directly from the app immediately after it's created.
 - HuddleCast is a niche platform not focused on current categories like artwork/real estate - only video content.
 `;
