@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { purchaseContract } from '../contract/huddleContract'
 import { getMetadata, purchaseDataset } from '../contract/huddleContract'
-import { APP_NAME } from '../util/constants'
+import { ACTIVE_NETWORK, APP_NAME } from '../util/constants'
 import { ethers } from 'ethers'
+import { getRpcError, transactionUrl } from '../util'
 
-export default function PurchaseStream({ }) {
+export default function PurchaseStream({ account }) {
   const [error, setError] = useState()
   const [result, setResult] = useState()
   const [loading, setLoading] = useState(false)
@@ -18,12 +19,11 @@ export default function PurchaseStream({ }) {
   async function purchase() {
     // TODO: add error check for preset location if user denied permission or location not retrievable.
     setLoading(true)
-    const { priceWei } = data
     try {
-      const res = await purchaseContract(contractAddress, priceWei)
+      const res = await purchaseContract(contractAddress, data.priceEth)
       setResult({ ...res, url: data?.url })
     } catch (e) {
-      setError(e.message)
+      setError(getRpcError(e))
     } finally {
       setLoading(false)
     }
@@ -46,7 +46,7 @@ export default function PurchaseStream({ }) {
     } catch (e) {
       console.error('error fetching record', e)
       let { message } = e
-      // setError(humanError(message))
+      setError(getRpcError(e))
     } finally {
       setLoading(false)
     }
@@ -63,12 +63,15 @@ export default function PurchaseStream({ }) {
   }
 
   if (error) {
-    return <div className='error-text boxed'>
-      {error}
+    return <div>
+      <Card title="Error completing request">
+      <p className='error-text'>{error}</p>
+      </Card>
     </div>
   }
 
   const isReady = !loading && data?.priceEth
+  const isPurchased = !!result
 
   return (
     <div className='boxed'>
@@ -80,14 +83,14 @@ export default function PurchaseStream({ }) {
         <h3>Creator: {data.creator}</h3>
         <p>{data.description}</p>
         {data.createdAt && <p>Created: {data.createdAt}</p>}
-        {data.priceEth && <p>Price: {data.priceEth} Eth</p>}
+        {data.priceEth && <p>Price: {data.priceEth} {ACTIVE_NETWORK.currency}</p>}
 
 
-        {isReady && <Button type="primary" size="large" loading={loading} onClick={purchase}>
+        {!isPurchased && isReady && <Button disabled={!account} type="primary" size="large" loading={loading} onClick={purchase}>
           Purchase content
         </Button>}
 </Card>
-        {result && <Result status="success" title="Purchased!"
+        {result && <Result status="success" title="Purchase complete!"
           subTitle={`TX: ${result.hash}`}
           extra={[
             <Button type="primary" key="console" onClick={() => {
@@ -95,6 +98,11 @@ export default function PurchaseStream({ }) {
             }}>
               View files
             </Button>,
+                 <Button key="console" onClick={() => {
+                  window.open(transactionUrl(result.hash), "_blank")
+                }}>
+                  View transaction
+                </Button>,
           ]} />}
 
       </div>}

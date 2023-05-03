@@ -35,7 +35,7 @@ export const ACTIVE_NETWORK = {
   url: "https://explorer.glif.io",
   rpc: "https://api.hyperspace.node.glif.io/rpc/v1",
   chainId: 3141,
-  currency: "tFil",
+  currency: "tFIL",
 };
 
 const requireEnv = (name) => {

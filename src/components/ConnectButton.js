@@ -1,28 +1,20 @@
 // ConnectButton.tsx
-import { useEthers, useEtherBalance } from "@usedapp/core";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import { Button } from "antd";
+import { getPrimaryAccount } from "../contract/huddleContract";
 
-export default function ConnectButton() {
-  const { activateBrowserWallet, account } = useEthers();
-  const etherBalance = useEtherBalance(account);
-
-  function handleConnectWallet() {
-    console.log("connect wallet");
-    activateBrowserWallet();
-  }
-
-  if (account && etherBalance) {
-    const amount = ethers.utils.formatEther(etherBalance.toString());
+export default function ConnectButton({account, onClick}) {
+  if (account) {
     return (
       <span color="white" fontSize="md">
-        <b>{amount} tFIL</b> {account.slice(0, 6)}**
+        <b>Hello: {account.slice(0, 6)}**</b>
       </span>
     );
   }
   return (
     <span className="right connect-button">
-      <Button type="primary" onClick={handleConnectWallet}>
+      <Button type="primary" onClick={onClick}>
         Connect wallet
       </Button>
     </span>

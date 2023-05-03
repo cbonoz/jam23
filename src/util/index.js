@@ -41,6 +41,13 @@ export const convertCamelToCapitalSpaces = (s) => {
   });
 };
 
+export const getRpcError = (e) => {
+  if (e.data) {
+    return e.data.message;
+  }
+  return e.message;
+};
+
   export function bytesToSize(bytes) {
     var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
     if (bytes == 0) return "0 Byte";

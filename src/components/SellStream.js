@@ -7,7 +7,6 @@ import { CONNECT_TEXT, UPLOAD_INFO } from "../util/constants";
 import { deployContract } from "../contract/huddleContract";
 import { getListingUrl, ipfsUrl, isEmpty, transactionUrl } from "../util";
 import { ethers } from 'ethers'
-import { useEthers } from "@usedapp/core";
 import Listify from "./Listify";
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -17,8 +16,7 @@ const { Step } = Steps;
 const LAST_STEP = 3;
 
 
-function SellStream({ }) {
-  const { activateBrowserWallet, account } = useEthers();
+function SellStream({ account }) {
   const [currentStep, setCurrentStep] = useState(0);
 
   const isLoggedIn = !!account;
