@@ -64,6 +64,21 @@ export const getContractBundleUrl = async (contractAddress) => {
   return result;
 };
 
+export const getMetadata = async (contractAddress) => {
+  if (!contractAddress) {
+    return null
+  }
+  const signer = await getSigner();
+  const contract = new ethers.Contract(
+    contractAddress,
+    HUDDLECAST_CONTRACT.abi,
+    signer
+  );
+  const result = await contract.getMetadata();
+  return result;
+};
+
+
 
 export const purchaseContract = async (contractAddress, eth) => {
   if (!contractAddress) {

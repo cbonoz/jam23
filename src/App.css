@@ -23,6 +23,11 @@
   margin: 20px;
 }
 
+.about-steps {
+  margin-bottom: 60px;
+  margin-top:50px;
+}
+
 .video-stream {
   width: 400px;
   max-width: 400x;

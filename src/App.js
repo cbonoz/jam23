@@ -42,9 +42,9 @@ function App() {
               Sell Content
             </Menu.Item>
 </>)}
-            {/* <Menu.Item key="/about" onClick={() => navigate('/about')}>
+            <Menu.Item key="/about" onClick={() => navigate('/about')}>
               About
-            </Menu.Item> */}
+            </Menu.Item>
             <ConnectButton />
           </Menu>
         </Header>

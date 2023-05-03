@@ -83,12 +83,13 @@ export default function VideoFeed({pathRoomId}) {
   const { peers } = usePeers();
 
   const hasRoom = !!roomId;
+  const shareableUrl = window.location.origin + '/stream/' + roomId
 
   return (
     <div className="grid grid-cols-2">
       <div>
         <h2 className="text-2xl">LiveStream</h2>
-        <p>{JSON.stringify(state.value)}</p>
+        {/* <p>{JSON.stringify(state.value)}</p> */}
         {!hasRoom && <div>
         <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder='Enter existing room ID'  />
         <br/>
@@ -115,6 +116,10 @@ export default function VideoFeed({pathRoomId}) {
 
         {hasRoom && <div>
           <h3>Room ID: {roomId}</h3>
+          <p>
+            <a href={shareableUrl} target='_blank'>Shareable URL</a>
+          </p>
+          
 
           <Button
             disabled={!joinLobby.isCallable && roomId}
@@ -123,7 +128,15 @@ export default function VideoFeed({pathRoomId}) {
             }}
           >
             Join lobby
-          </Button>
+          </Button>&nbsp;
+
+          <Button
+              disabled={!state.matches('Initialized.JoinedLobby')}
+              onClick={() => send('LEAVE_LOBBY')}
+            >
+              Leave lobby
+            </Button>
+
           <br />
           <div>
             <h2>Stream:</h2>
@@ -172,13 +185,6 @@ export default function VideoFeed({pathRoomId}) {
 
             <Button disabled={!joinRoom.isCallable} onClick={joinRoom}>
               Join Room
-            </Button>
-
-            <Button
-              disabled={!state.matches('Initialized.JoinedLobby')}
-              onClick={() => send('LEAVE_LOBBY')}
-            >
-              Leave lobby
             </Button>
 
             <Button

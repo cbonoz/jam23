@@ -32,23 +32,32 @@ export const capitalize = (s) => {
   if (typeof s !== "string") return "";
   return (s.charAt(0).toUpperCase() + s.slice(1)).replace("-", " ");
 };
-export function bytesToSize(bytes) {
-  var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes == 0) return "0 Byte";
-  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
-}
 
-export const ipfsUrl = (cid, fileName) => {
-  // let url = `https://ipfs.io/ipfs/${cid}`;
-  let url = `${IPFS_BASE_URL}/${cid}`;
-  if (fileName) {
-    return `${url}/${fileName}`;
-  }
-  return url;
+
+export const convertCamelToCapitalSpaces = (s) => {
+  if (typeof s !== "string") return "";
+  return s.replace(/([A-Z])/g, " $1").replace(/^./, function (str) {
+    return str.toUpperCase();
+  });
 };
 
-export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}?network=hyperspacenet`;
-export const accountUrl = (account) =>
-  `${ACTIVE_NETWORK.url}/account/${account}`;
+  export function bytesToSize(bytes) {
+    var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    if (bytes == 0) return "0 Byte";
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
+  }
+
+  export const ipfsUrl = (cid, fileName) => {
+    // let url = `https://ipfs.io/ipfs/${cid}`;
+    let url = `${IPFS_BASE_URL}/${cid}`;
+    if (fileName) {
+      return `${url}/${fileName}`;
+    }
+    return url;
+  };
+
+  export const transactionUrl = (tx) => `${ACTIVE_NETWORK.url}/tx/${tx}?network=hyperspacenet`;
+  export const accountUrl = (account) =>
+    `${ACTIVE_NETWORK.url}/account/${account}`;
 

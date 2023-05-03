@@ -1,8 +1,10 @@
-import { Button, Result, Spin } from 'antd'
+import { Button, Card, Result, Spin } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { purchaseContract } from '../contract/huddleContract'
 import { getMetadata, purchaseDataset } from '../contract/huddleContract'
+import { APP_NAME } from '../util/constants'
+import { ethers } from 'ethers'
 
 export default function PurchaseStream({ }) {
   const [error, setError] = useState()
@@ -19,7 +21,7 @@ export default function PurchaseStream({ }) {
     const { priceWei } = data
     try {
       const res = await purchaseContract(contractAddress, priceWei)
-      setResult({ ...res })
+      setResult({ ...res, url: data?.url })
     } catch (e) {
       setError(e.message)
     } finally {
@@ -31,10 +33,16 @@ export default function PurchaseStream({ }) {
     setError(undefined)
     setLoading(true)
     try {
-      // const res = await getMetadata(contractAddress);
-      // TODO
-      const res = {}
-      setData(res)
+      const res = await getMetadata(contractAddress);
+      const d = {
+        title: res[0],
+        url: res[1],
+        creator: res[2],
+        payableAddress: res[3],
+        priceEth: ethers.utils.formatEther(res[4].toString())
+      }
+      d['priceWei'] = ethers.utils.parseUnits(d.priceEth.toString(),"ether").toString()
+      setData(d)
     } catch (e) {
       console.error('error fetching record', e)
       let { message } = e
@@ -65,27 +73,28 @@ export default function PurchaseStream({ }) {
   return (
     <div className='boxed'>
       {data && <div className='centered card boxed'>
-        <h4 className='centered success-text'>data available for purchase</h4>
+        <Card className='centered success-text' title={`Available for purchase`}>
+        {/* {JSON.stringify(data)} */}
+        {/* <p>Available for purchase</p> */}
         <h2>{data.title}</h2>
+        <h3>Creator: {data.creator}</h3>
         <p>{data.description}</p>
         {data.createdAt && <p>Created: {data.createdAt}</p>}
-        {data.purchases && <p>Purchases: {data.purchases}</p>}
         {data.priceEth && <p>Price: {data.priceEth} Eth</p>}
 
 
         {isReady && <Button type="primary" size="large" loading={loading} onClick={purchase}>
-          Purchase dataset
+          Purchase content
         </Button>}
-
-        {result && <Result status="success" title="Event recorded!"
+</Card>
+        {result && <Result status="success" title="Purchased!"
           subTitle={`TX: ${result.hash}`}
           extra={[
-            <p>{JSON.stringify(result)}</p>
-            // <Button type="primary" key="console" onClick={() => {
-            //   window.open(result.contractUrl, "_blank")
-            // }}>
-            //   View contract
-            // </Button>,
+            <Button type="primary" key="console" onClick={() => {
+              window.open(result.url, "_blank")
+            }}>
+              View files
+            </Button>,
           ]} />}
 
       </div>}

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { StreamDropzone } from "./StreamDropzone";
-import { Input, Button, Steps, Layout } from "antd";
+import { Input, Button, Steps, Layout, Result } from "antd";
 import { storeFiles } from "../util/stor";
 import { CONNECT_TEXT, UPLOAD_INFO } from "../util/constants";
 import { deployContract } from "../contract/huddleContract";
 import { getListingUrl, ipfsUrl, isEmpty, transactionUrl } from "../util";
-import {ethers} from 'ethers'
+import { ethers } from 'ethers'
 import { useEthers } from "@usedapp/core";
+import Listify from "./Listify";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -16,7 +17,7 @@ const { Step } = Steps;
 const LAST_STEP = 3;
 
 
-function SellStream({}) {
+function SellStream({ }) {
   const { activateBrowserWallet, account } = useEthers();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -104,7 +105,7 @@ function SellStream({}) {
         updateStep(1)
       }
       if (!info.payableAddress) {
-        updateInfo({payableAddress: account})
+        updateInfo({ payableAddress: account })
       }
     }
 
@@ -116,7 +117,7 @@ function SellStream({}) {
         return (
           <div>
             <h2 className="sell-header">Login</h2>
-            <br/>
+            <br />
             <p>
               In order to create a listing, you must login with your metamask or
               wallet account. Click '{CONNECT_TEXT}' in the top right to begin.
@@ -161,7 +162,7 @@ function SellStream({}) {
               placeholder="Payment Address: "
               value={info.payableAddress}
             />
-            <p><br/>{UPLOAD_INFO}</p>
+            <p><br />{UPLOAD_INFO}</p>
           </div>
         );
       case 2: // upload
@@ -170,28 +171,27 @@ function SellStream({}) {
             <StreamDropzone files={files} setFiles={setFiles} />
             {isEmpty(files) && <p>
               Upload at least one file to continue.
-              </p>}
+            </p>}
           </div>
         );
       case 3: // done
         return (
           <div className="complete-section">
-            <h2 className="sell-header green">Complete!</h2>
+            <Result
+              status="success"
+              title="Created listing!"
+              subTitle="Your listing has been created and is now available for purchase."
+            />
             {result.transactionHash && <p>
-              View transaction<br/>
+              View transaction<br />
               <a target="_blank" href={transactionUrl(result.transactionHash)}>{result.transactionHash}</a></p>}
 
-              <p>Share the contract purchase address below!<br/>
+            <p>Share the contract purchase address below!<br />
               <a target="_blank" href={getListingUrl(result.contract)}>here</a>
-</p>
-            {Object.keys(result).map((k) => {
-              return (
-                <li>
-                  {k}: {JSON.stringify(result[k]).replaceAll('"', "")}
-                </li>
-              );
-            })}
-            <br/>
+            </p>
+            <Listify obj={result} />
+
+            <br />
             <h3>Listing information</h3>
             {Object.keys(info).map((k) => {
               return (
@@ -215,7 +215,7 @@ function SellStream({}) {
 
   return (
     <div className="content">
-      <h1 className="sell-heading">Publish a new HuddleCast stream bundle</h1>
+      <h1 className="sell-heading">Publish a new HuddleCast video bundle</h1>
       <Header>
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />
@@ -248,6 +248,7 @@ function SellStream({}) {
             {onLastStep ? "Create Contract" : "Next"}
           </Button>
         )}
+        {loading && <p>&nbsp;Please wait...</p>}
       </Footer>
     </div>
   );

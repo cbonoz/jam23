@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.18;
 
 import "hardhat/console.sol";
 
@@ -24,6 +24,10 @@ contract BundleContract {
         creatorName = _creatorName;
         payableAddress = _payableAddress;
         price = _price;
+    }
+
+    function getMetadata() public view returns (string memory, string memory, string memory, address, uint) {
+        return (name, bundleUrl, creatorName, payableAddress, price);
     }
 
     function purchase() public payable {
