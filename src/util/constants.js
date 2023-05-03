@@ -38,6 +38,8 @@ export const ACTIVE_NETWORK = {
   currency: "tFIL",
 };
 
+export const IS_LOCAL = window.location.hostname === "localhost";
+
 const requireEnv = (name) => {
   const value = process.env[name];
   if (!value) {

@@ -95,10 +95,10 @@ export default function VideoFeed({pathRoomId}) {
   return (
     <div className="grid grid-cols-2">
       <div>
-        <h2 className="text-2xl">LiveStream</h2>
+        {/* <h2 className="text-2xl">LiveStream</h2> */}
         {/* <p>{JSON.stringify(state.value)}</p> */}
         {!hasRoom && <div>
-        <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder='Enter existing room ID'  />
+        <Input style={{width: '400px'}} prefix="Room ID" value={value} onChange={(e) => setValue(e.target.value)} placeholder='Enter existing room ID'  />
         <br/>
         <br/>
         <Button
@@ -170,7 +170,7 @@ export default function VideoFeed({pathRoomId}) {
                   <Audio key={peer.peerId} peerId={peer.peerId} track={peer.mic} />
                 ))}
             </div>
-          <RecordingControl/>
+          <RecordingControl roomId={roomId}/>
           </div>
 
           <br />
@@ -180,18 +180,7 @@ export default function VideoFeed({pathRoomId}) {
               disabled={!fetchVideoStream.isCallable}
               onClick={fetchVideoStream}
             >
-              Enable Video
-            </Button>
-
-            <Button
-              disabled={!fetchAudioStream.isCallable}
-              onClick={fetchAudioStream}
-            >
-              Enable Audio
-            </Button>
-
-            <Button disabled={!joinRoom.isCallable} onClick={joinRoom}>
-              Join Room
+              Start streaming
             </Button>
 
             <Button
@@ -200,6 +189,14 @@ export default function VideoFeed({pathRoomId}) {
             >
               Stop streaming
             </Button>
+        
+            <Button
+              disabled={!fetchAudioStream.isCallable}
+              onClick={fetchAudioStream}
+            >
+              Enable Audio
+            </Button>
+
             <Button
               disabled={!stopAudioStream.isCallable}
               onClick={stopAudioStream}
@@ -208,45 +205,50 @@ export default function VideoFeed({pathRoomId}) {
             </Button>
           </div>
           <br />
-          {false && <div>
-          <h2 className="text-3xl text-green-600 font-extrabold">Room</h2>
+          <div>
+          <h2 className="text-3xl text-green-600 font-extrabold">Sharing</h2>
           <div className="flex gap-4 flex-wrap">
-            <Button
-              disabled={!produceAudio.isCallable}
-              onClick={() => produceAudio(micStream)}
-            >
-              PRODUCE_MIC
-            </Button>
-
-            <Button
-              disabled={!produceVideo.isCallable}
-              onClick={() => produceVideo(camStream)}
-            >
-              PRODUCE_CAM
-            </Button>
-
-            <Button
-              disabled={!stopProducingAudio.isCallable}
-              onClick={() => stopProducingAudio()}
-            >
-              STOP_PRODUCING_MIC
-            </Button>
-
-            <Button
-              disabled={!stopProducingVideo.isCallable}
-              onClick={() => stopProducingVideo()}
-            >
-              STOP_PRODUCING_CAM
+          <Button disabled={!joinRoom.isCallable} onClick={joinRoom}>
+              Join Room
             </Button>
 
             <Button disabled={!leaveRoom.isCallable} onClick={() => {
               setRoomId(null)
               leaveRoom()
             }}>
-              LEAVE_ROOM
+              Leave room
             </Button>
+            <Button
+              disabled={!produceAudio.isCallable}
+              onClick={() => produceAudio(micStream)}
+            >
+              Share Mic
+            </Button>
+
+            <Button
+              disabled={!produceVideo.isCallable}
+              onClick={() => produceVideo(camStream)}
+            >
+              Share video
+            </Button>
+
+            <Button
+              disabled={!stopProducingAudio.isCallable}
+              onClick={() => stopProducingAudio()}
+            >
+              Stop sharing mic
+            </Button>
+
+            <Button
+              disabled={!stopProducingVideo.isCallable}
+              onClick={() => stopProducingVideo()}
+            >
+              Stop sharing video
+            </Button>
+
+   
           </div>
-            </div>}
+            </div>
 
           {/* Uncomment to see the Xstate Inspector */}
           {/* <Inspect /> */}
