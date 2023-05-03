@@ -90,16 +90,21 @@ Update `ACTIVE_NETWORK` in `constants.js` to reflect the target network for the 
 <img src="./img/created.png" width=800>
 
 <h3>Breakpoint at contract creation</h3>
-<img src="./img/deploy.png" width=800>
+<img src="./img/confirm.png" width=800>
 
 <h3>HuddleCast created!</h3>
 <img src="./img/upload3.png" width=800>
 
-<h3>Deployed contract on Hyperspace testnet</h3>
-<img src="./img/contract.png" width=800>
 
 <h3>Completing purchase via shareable payment url</h3>
 <img src="./img/checkout.png" width=800>
+
+<h3>Purchase transaction after confirmation</h3>
+<img src="./img/transaction.png" width=800>
+
+<h3>Deployed contract with purchase on Hyperspace testnet</h3>
+<img src="./img/explorer.png" width=800>
+
 
 <h3>Creating a stream on the HuddleCast app</h3>
 <img src="./img/video.png" width=800>
