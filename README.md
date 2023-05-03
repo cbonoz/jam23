@@ -7,7 +7,7 @@
 
 HuddleCast allows content creators to sell bundles/rights to their video or gaming content via transactable Hyperspace Filecoin smart contracts.
 
-The smart contract acts a content gate where only the purchasers of the stream can access the original uploaded file resources.
+Each smart contract acts as a content gate where only the purchasers of the stream can access the original uploaded file resources by the content creator.
 
 Built for the Videojam 2023 hackathon.
 
